@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SN Pro Font -->
+<link href="https://fonts.googleapis.com/css2?family=SN+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* Global styles */
+  body {
+    background-color: rgb(18, 18, 21); /* dark background */
+    font-family: 'SN Pro', sans-serif; /* apply SN Pro */
+    user-select: none; /* disable text selection */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  /* Custom frame styles */
+  .custom-frame {
+    width: 500px;
+    height: 55px;
+    background-color: #373a4d; /* Material 3 expressive orange */
+    border-radius: 8px; /* default for middle frames */
+    margin: 3px 0;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    cursor: default; /* indicate non-selectable */
+  }
+
+  /* First frame */
+  .custom-frame:first-child {
+    border-radius: 18px 18px 8px 8px;
+  }
+
+  /* Last frame */
+  .custom-frame:last-child {
+    border-radius: 8px 8px 18px 18px;
+  }
+</style>
+</head>
+<body>
+
+<div class="custom-frame">Frame 1</div>
+<div class="custom-frame">Frame 2</div>
+<div class="custom-frame">Frame 3</div>
+
+</body>
+</html>
