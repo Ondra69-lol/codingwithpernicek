@@ -5,27 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coding With Pernicek - Loading</title>
 <style>
-  /* Full-screen container */
   body, html {
     height: 100%;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(18, 18, 21); /* dark background */
+    background-color: rgb(18, 18, 21);
   }
 
-  /* Spinner style */
   .spinner {
+    position: relative;
     width: 60px;
     height: 60px;
-    border: 6px solid #2e2e2e; /* darker gray border */
-    border-top: 6px solid #a87979; /* Your desired spinner color */
-    border-radius: 50%;
     animation: spin 1s linear infinite;
   }
 
-  /* Animation */
+  .spinner div {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .spinner div:nth-child(1) { background: #4285F4; top: 0; left: 50%; transform: translateX(-50%); }
+  .spinner div:nth-child(2) { background: #EA4335; top: 50%; right: 0; transform: translateY(-50%); }
+  .spinner div:nth-child(3) { background: #FBBC05; bottom: 0; left: 50%; transform: translateX(-50%); }
+  .spinner div:nth-child(4) { background: #34A853; top: 50%; left: 0; transform: translateY(-50%); }
+
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -33,13 +40,18 @@
 </style>
 </head>
 <body>
-  <div class="spinner"></div>
+  <div class="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 
   <script>
-    // Redirect to home/main.html after 2 seconds
+    // Redirect to home after 4 seconds
     setTimeout(() => {
       window.location.href = "home";
-    }, 4000); // 2000ms = 2 seconds
+    }, 4000);
   </script>
 </body>
 </html>
