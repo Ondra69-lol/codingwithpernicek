@@ -12,15 +12,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff; /* optional: change background */
+    background-color: rgb(18, 18, 21); /* dark background */
   }
 
   /* Spinner style */
   .spinner {
     width: 60px;
     height: 60px;
-    border: 6px solid #f3f3f3; /* Light gray background of spinner */
-    border-top: 6px solid #2e2121; /* Your desired color */
+    border: 6px solid #2e2e2e; /* darker gray border */
+    border-top: 6px solid #2e2121; /* Your desired spinner color */
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
@@ -34,5 +34,12 @@
 </head>
 <body>
   <div class="spinner"></div>
+
+  <script>
+    // Redirect to home/main.html after 2 seconds
+    setTimeout(() => {
+      window.location.href = "home/main.html";
+    }, 2000); // 2000ms = 2 seconds
+  </script>
 </body>
 </html>
