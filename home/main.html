@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SN Pro Font -->
+<link href="https://fonts.googleapis.com/css2?family=SN+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* Global styles */
+  body {
+    background-color: rgb(18, 18, 21); /* dark background */
+    font-family: 'SN Pro', sans-serif;
+    user-select: none;
+    margin: 0; /* remove default margins */
+    height: 100vh; /* full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* top-aligned normal frames */
+    align-items: center;
+    padding: 20px;
+  }
+
+  /* Regular frames */
+  .custom-frame {
+    width: 500px;
+    height: 55px;
+    background-color: #373a4d; 
+    border-radius: 8px;
+    margin: 3px 0;
+    color: white;
+    text-align: center;
+    line-height: 55px;
+    font-size: 20px;
+    cursor: default;
+  }
+
+  /* First frame */
+  .custom-frame:first-child {
+    border-radius: 18px 18px 8px 8px;
+  }
+
+  /* Last frame */
+  .custom-frame:nth-last-of-type(1) {
+  border-radius: 8px 8px 18px 18px;
+}
+
+  /* Bottom frame (link) */
+  .bottom-frame {
+    position: fixed; /* stick to bottom */
+    bottom: 20px; /* 20px from bottom */
+    width: 500px;
+    height: 55px;
+    background-color: #2e2121; /* Material 3 expressive orange */
+    border-radius: 18px; /* fully rounded corners */
+    color: white;
+    text-align: center;
+    line-height: 55px;
+    font-size: 20px;
+    cursor: pointer;
+    text-decoration: none; /* remove underline */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+</style>
+</head>
+<body>
+
+<div class="custom-frame">Frame 1</div>
+<div class="custom-frame">Frame 2</div>
+<div class="custom-frame">Frame 3</div>
+
+<!-- Bottom frame linking to YouTube -->
+<a class="bottom-frame" href="https://www.youtube.com/@Pernicek_Cute" target="_blank">
+  My Channel
+</a>
+
+</body>
+</html>
+
+
+
 
