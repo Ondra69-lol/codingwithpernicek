@@ -7,7 +7,6 @@
 
 <link rel="icon" type="image/svg+xml" href="../homefavicon.svg">
 <link rel="apple-touch-icon" href="../homefavicon.svg">
-
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -60,11 +59,8 @@
     transition: background-color 0.2s ease;
   }
 
-  .nav-item:hover {
-    background-color: #50556b;
-  }
+  .nav-item:hover { background-color: #50556b; }
 
-  /* Spodní tlačítko uvnitř navbaru */
   .bottom-frame {
     width: 140px;
     height: 55px;
@@ -80,9 +76,7 @@
     transition: background-color 0.2s ease;
   }
 
-  .bottom-frame:hover {
-    background-color: #432f2f;
-  }
+  .bottom-frame:hover { background-color: #432f2f; }
 
   /* MAIN CONTENT */
   .content-wrapper {
@@ -95,11 +89,11 @@
     padding: 20px;
   }
 
+  /* FRAME STYLING */
   .custom-frame {
     width: 500px;
     height: 55px;
     background-color: #373a4d;
-    border-radius: 8px;
     margin: 3px 0;
     color: white;
     text-align: center;
@@ -107,22 +101,23 @@
     font-size: 20px;
   }
 
-  .custom-frame:first-child {
-    border-radius: 18px 18px 8px 8px;
+  /* dynamické zaoblení: první a poslední frame ignoruje textbox */
+  .custom-frame:first-of-type {
+    border-radius: 18px 18px 8px 8px; /* horní zaoblení */
   }
-  .custom-frame:last-child {
-    border-radius: 8px 8px 18px 18px;
+  .custom-frame:last-of-type {
+    border-radius: 8px 8px 18px 18px; /* dolní zaoblení */
   }
 
   /* Google-style textbox */
   .google-textbox-container {
     position: relative;
     margin-top: 20px;
-    width: 500px;
+    width: 500px; /* stejná šířka jako frame */
   }
 
   .google-textbox {
-    width: 500px;
+    width: 100%;
     height: 55px;
     padding: 0 45px 0 15px;
     font-family: 'Google Sans', sans-serif;
@@ -153,32 +148,33 @@
 </head>
 
 <body>
-
 <div class="navbar">
-  <!-- Horní menu -->
   <div class="nav-items">
     <a class="nav-item" href="../home">Domov</a>
     <div class="nav-item">O web stránce</div>
     <div class="nav-item">Projekty</div>
   </div>
 
-  <!-- Dolní tlačítko uvnitř navbaru -->
   <a class="bottom-frame" href="https://www.youtube.com/@Pernicek_Cute" target="_blank">
     Můj kanál
   </a>
 </div>
 
 <div class="content-wrapper">
+  <div class="custom-frame">Frame 1</div>
+  <div class="custom-frame">Frame 2</div>
+  <div class="custom-frame">Frame 3</div>
+
+  <!-- Google-style textbox -->
   <div class="google-textbox-container">
-    <input type="text" class="google-textbox" placeholder="TextBox">
+    <input type="text" class="google-textbox" placeholder="Hledat...">
     <svg class="google-textbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5f6368">
       <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
     </svg>
   </div>
-  <div class="custom-frame">Frame 1</div>
-  <div class="custom-frame">Frame 2</div>
-  <div class="custom-frame">Frame 3</div>
-</div>
 
+  <!-- další frame pod textboxem (bude první, horní zaoblení) -->
+  <div class="custom-frame">Frame 4</div>
+</div>
 </body>
 </html>
