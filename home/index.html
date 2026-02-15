@@ -302,8 +302,12 @@ function handleSwipe() {
 window.addEventListener("resize", () => {
   if (window.innerWidth <= 600) {
     setCollapsed(true);
+    btn.style.display = "none";   // hide button
+  } else {
+    btn.style.display = "block";  // show button again
   }
 });
+
 </script>
 
 
