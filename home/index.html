@@ -240,7 +240,7 @@ const btn = document.getElementById("toggleBtn");
 function setCollapsed(collapsed) {
   navbar.classList.toggle("collapsed", collapsed);
   content.classList.toggle("expanded", collapsed);
-  btn.textContent = collapsed ? "✖" : "☰";
+  btn.textContent = collapsed ? "☰" : "✖";
   localStorage.setItem("navbarState", collapsed ? "collapsed" : "expanded");
 }
 
@@ -249,17 +249,25 @@ function toggleNavbar() {
   setCollapsed(!isCollapsed);
 }
 
-// ---------- LOAD SAVED STATE ----------
-const savedState = localStorage.getItem("navbarState");
+// ---------- INITIAL STATE ----------
+function applyInitialState() {
+  const savedState = localStorage.getItem("navbarState");
+  const smallScreen = window.innerWidth <= 600;
 
-// Auto-collapse on small screens
-if (window.innerWidth <= 600) {
-  setCollapsed(true);
-} else if (savedState === "collapsed") {
-  setCollapsed(true);
-} else {
-  setCollapsed(false);
+  if (smallScreen) {
+    setCollapsed(true);
+    btn.hidden = true;
+  } else {
+    btn.hidden = false;
+    if (savedState === "collapsed") {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  }
 }
+
+applyInitialState();
 
 // ---------- BUTTON CLICK ----------
 btn.addEventListener("click", toggleNavbar);
@@ -287,28 +295,19 @@ document.addEventListener("touchend", (e) => {
 function handleSwipe() {
   const swipeDistance = touchEndX - touchStartX;
 
-  // swipe right = open
   if (swipeDistance > 80) {
-    setCollapsed(false);
+    setCollapsed(false); // swipe right = open
   }
 
-  // swipe left = close
   if (swipeDistance < -80) {
-    setCollapsed(true);
+    setCollapsed(true); // swipe left = close
   }
 }
 
 // ---------- RESIZE HANDLER ----------
-window.addEventListener("resize", () => {
-  if (window.innerWidth <= 600) {
-    setCollapsed(true);
-    btn.style.display = "none";   // hide button
-  } else {
-    btn.style.display = "block";  // show button again
-  }
-});
-
+window.addEventListener("resize", applyInitialState);
 </script>
+
 
 
 </body>
