@@ -64,44 +64,40 @@
   }
 
   /* Spodní tlačítko */
-  /* Spodní tlačítko - jen Y automaticky */
-.bottom-frame {
-  position: fixed;
-  bottom: calc(5% + env(safe-area-inset-bottom)); /* vertikální pozice škálovatelná */
-  left: 50%; /* horizontálně stále vycentrované */
-  transform: translateX(-50%); /* jen X transformace */
-  width: 80%;
-  max-width: 220px;
-  min-width: 150px;
-  height: clamp(50px, 7vh, 60px);
-  background-color: #2e2121;
-  border-radius: 18px;
-  color: white;
-  text-align: center;
-  line-height: clamp(50px, 7vh, 60px);
-  font-size: clamp(16px, 1.5vw, 20px);
-  cursor: pointer;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: background-color 0.2s ease;
-}
+  .bottom-frame {
+    position: absolute;
+    bottom: 3vh; /* škálovatelná vertikální pozice */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: clamp(50px, 7vh, 60px);
+    background-color: #2e2121;
+    border-radius: 18px;
+    color: white;
+    text-align: center;
+    line-height: clamp(50px, 7vh, 60px);
+    font-size: clamp(16px, 1.5vw, 20px);
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.2s ease;
+  }
 
-.bottom-frame:hover {
-  background-color: #432f2f;
-}
+  .bottom-frame:hover {
+    background-color: #432f2f;
+  }
 
-/* Version label nad tlačítkem - jen Y */
-.version-label {
-  position: fixed;
-  bottom: calc(12% + env(safe-area-inset-bottom)); /* vertikální pozice nad tlačítkem */
-  left: 50%; /* horizontálně stále vycentrované */
-  transform: translateX(-50%); /* jen X transformace */
-  color: #aaa;
-  font-size: clamp(12px, 1vw, 14px);
-  font-weight: 500;
-  text-align: center;
-}
-
+  /* Verze nad spodním tlačítkem */
+  .version-label {
+    position: absolute;
+    bottom: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #aaa;
+    font-size: clamp(12px, 1vw, 14px);
+    font-weight: 500;
+    text-align: center;
+  }
 
   /* MAIN CONTENT */
   .content-wrapper {
@@ -162,45 +158,17 @@
       line-height: clamp(36px, 5vh, 50px);
     }
 
-    /* Spodní tlačítko - škálovatelné a safe-area kompatibilní */
-.bottom-frame {
-  position: fixed; /* fixed místo absolute, aby bylo vždy vidět */
-  bottom: calc(5% + env(safe-area-inset-bottom)); /* automatická pozice + safe area */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  max-width: 220px;
-  min-width: 150px;
-  height: clamp(50px, 7vh, 60px);
-  background-color: #2e2121;
-  border-radius: 18px;
-  color: white;
-  text-align: center;
-  line-height: clamp(50px, 7vh, 60px);
-  font-size: clamp(16px, 1.5vw, 20px);
-  cursor: pointer;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: background-color 0.2s ease;
-  z-index: 100; /* aby bylo nad contentem */
-}
+    .bottom-frame {
+      width: 90%;
+      height: clamp(45px, 7vh, 55px);
+      line-height: clamp(45px, 7vh, 55px);
+      font-size: clamp(14px, 4vw, 18px);
+    }
 
-.bottom-frame:hover {
-  background-color: #432f2f;
-}
-
-/* Version label nad tlačítkem */
-.version-label {
-  position: fixed; /* fixed pro automatické škálování */
-  bottom: calc(12% + env(safe-area-inset-bottom)); /* nad tlačítkem + safe area */
-  left: 50%;
-  transform: translateX(-50%);
-  color: #aaa;
-  font-size: clamp(12px, 1vw, 14px);
-  font-weight: 500;
-  text-align: center;
-  z-index: 90; /* pod tlačítkem */
-}
+    .version-label {
+      font-size: clamp(10px, 3vw, 12px);
+      bottom: 12vh;
+    }
 
     .content-wrapper {
       margin-left: 28vw;
