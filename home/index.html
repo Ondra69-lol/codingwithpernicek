@@ -22,7 +22,6 @@ body {
 #toggleBtn {
   position: fixed;
   top: 15px;
-  left: 15px;
   z-index: 1001;
   background: #373a4d;
   color: white;
@@ -210,54 +209,42 @@ body {
 </div>
 
 <div class="content-wrapper">
+  <!-- Example frames -->
   <div class="custom-frame">Frame 1</div>
   <div class="custom-frame">Frame 2</div>
   <div class="custom-frame">Frame 3</div>
   <div class="custom-frame">Frame 4</div>
   <div class="custom-frame">Frame 5</div>
-  <div class="custom-frame">Frame 6</div>
-  <div class="custom-frame">Frame 7</div>
-  <div class="custom-frame">Frame 8</div>
-  <div class="custom-frame">Frame 9</div>
-  <div class="custom-frame">Frame 10</div>
-  <div class="custom-frame">Frame 11</div>
-  <div class="custom-frame">Frame 12</div>
-  <div class="custom-frame">Frame 13</div>
-  <div class="custom-frame">Frame 14</div>
-  <div class="custom-frame">Frame 15</div>
-  <div class="custom-frame">Frame 16</div>
-  <div class="custom-frame">Frame 17</div>
-  <div class="custom-frame">Frame 18</div>
-  <div class="custom-frame">Frame 19</div>
-  <div class="custom-frame">Frame 20</div>
 </div>
 
 <script>
 const navbar = document.querySelector(".navbar");
 const content = document.querySelector(".content-wrapper");
 const btn = document.getElementById("toggleBtn");
+const MIN_LEFT = 10;
 
-// ---------- STATE FUNCTIONS ----------
+// ---------- STATE ----------
+let userToggled = false; // tracks if user manually toggled
+
 function setCollapsed(collapsed) {
   navbar.classList.toggle("collapsed", collapsed);
   content.classList.toggle("expanded", collapsed);
   btn.textContent = collapsed ? "☰" : "✖";
-  localStorage.setItem("navbarState", collapsed ? "collapsed" : "expanded");
   updateButtonPosition();
+  if (userToggled) {
+    localStorage.setItem("navbarState", collapsed ? "collapsed" : "expanded");
+  }
 }
 
 function toggleNavbar() {
-  const isCollapsed = navbar.classList.contains("collapsed");
-  setCollapsed(!isCollapsed);
+  userToggled = true;
+  setCollapsed(!navbar.classList.contains("collapsed"));
 }
 
-// ---------- BUTTON POSITION FUNCTION ----------
+// ---------- BUTTON POSITION ----------
 function updateButtonPosition() {
-  if (window.innerWidth <= 600) {
-    btn.style.left = navbar.classList.contains("collapsed") ? "15px" : "clamp(150px, 12vw, 220px)";
-  } else {
-    btn.style.left = "15px";
-  }
+  const navbarWidth = navbar.classList.contains("collapsed") ? 0 : navbar.offsetWidth;
+  btn.style.left = `${Math.max(navbarWidth + 10, MIN_LEFT)}px`;
 }
 
 // ---------- INITIAL STATE ----------
@@ -265,60 +252,40 @@ function applyInitialState() {
   const savedState = localStorage.getItem("navbarState");
   const smallScreen = window.innerWidth <= 600;
 
-  if (smallScreen) {
-    setCollapsed(true);
-    btn.hidden = true;
+  if (userToggled) {
+    // Respect previous user choice
+    setCollapsed(savedState === "collapsed");
   } else {
-    btn.hidden = false;
-    if (savedState === "collapsed") {
-      setCollapsed(true);
-    } else {
-      setCollapsed(false);
-    }
+    // Auto-collapse/expand based on screen
+    setCollapsed(smallScreen);
   }
   updateButtonPosition();
 }
 
 applyInitialState();
 
-// ---------- BUTTON CLICK ----------
+// ---------- EVENTS ----------
 btn.addEventListener("click", toggleNavbar);
 
-// ---------- KEYBOARD SHORTCUT (M) ----------
-document.addEventListener("keydown", (e) => {
-  if (e.key.toLowerCase() === "m") {
-    toggleNavbar();
-  }
+document.addEventListener("keydown", e => {
+  if (e.key.toLowerCase() === "m") toggleNavbar();
 });
 
-// ---------- SWIPE GESTURE ----------
 let touchStartX = 0;
 let touchEndX = 0;
 
-document.addEventListener("touchstart", (e) => {
-  touchStartX = e.changedTouches[0].screenX;
-});
-
-document.addEventListener("touchend", (e) => {
+document.addEventListener("touchstart", e => touchStartX = e.changedTouches[0].screenX);
+document.addEventListener("touchend", e => {
   touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
+  const distance = touchEndX - touchStartX;
+  if (distance > 80) { userToggled = true; setCollapsed(false); }
+  if (distance < -80) { userToggled = true; setCollapsed(true); }
 });
 
-function handleSwipe() {
-  const swipeDistance = touchEndX - touchStartX;
-
-  if (swipeDistance > 80) {
-    setCollapsed(false); // swipe right = open
-  }
-
-  if (swipeDistance < -80) {
-    setCollapsed(true); // swipe left = close
-  }
-}
-
-// ---------- RESIZE HANDLER ----------
+// ---------- RESIZE ----------
 window.addEventListener("resize", () => {
-  applyInitialState();
+  if (!userToggled) applyInitialState();
+  updateButtonPosition();
 });
 </script>
 
