@@ -13,12 +13,14 @@
     justify-content: center;
     align-items: center;
     background-color: rgb(18, 18, 21);
+    overflow: hidden;
   }
 
   .spinner {
     position: relative;
     width: 60px;
     height: 60px;
+    animation: spin 1s linear infinite;
   }
 
   .spinner div {
@@ -26,19 +28,30 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* všechny tečky doprostřed */
   }
 
-  .spinner div:nth-child(1) { background: #4285F4; }
-  .spinner div:nth-child(2) { background: #EA4335; }
-  .spinner div:nth-child(3) { background: #FBBC05; }
-  .spinner div:nth-child(4) { background: #34A853; }
+  .spinner div:nth-child(1) { background: #4285F4; top: 0; left: 50%; transform: translateX(-50%); }
+  .spinner div:nth-child(2) { background: #EA4335; top: 50%; right: 0; transform: translateY(-50%); }
+  .spinner div:nth-child(3) { background: #FBBC05; bottom: 0; left: 50%; transform: translateX(-50%); }
+  .spinner div:nth-child(4) { background: #34A853; top: 50%; left: 0; transform: translateY(-50%); }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Po 2 sekundách přestane spinner otáčet a tečky se přesunou doprostřed */
+  .center div {
+    top: 50% !important;
+    left: 50% !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: translate(-50%, -50%) !important;
+  }
 </style>
 </head>
 <body>
-  <div class="spinner">
+  <div class="spinner" id="spinner">
     <div></div>
     <div></div>
     <div></div>
@@ -46,7 +59,15 @@
   </div>
 
   <script>
-    // Redirect na home po 2 sekundách
+    const spinner = document.getElementById('spinner');
+
+    // Po 2 sekundách: zastav rotaci a přesuň tečky doprostřed
+    setTimeout(() => {
+      spinner.style.animation = 'none';   // zastaví rotaci
+      spinner.classList.add('center');    // přesune všechny divy doprostřed
+    }, 2000);
+
+    // Po dalších 2 sekundách redirect, pokud chceš
     setTimeout(() => {
       window.location.href = "home";
     }, 2000);
