@@ -31,7 +31,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     padding: 20px 0;
     box-sizing: border-box;
   }
@@ -41,6 +40,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-top: 10px;
   }
 
   .nav-item {
@@ -64,8 +64,12 @@
     background-color: #50556b;
   }
 
-  /* Spodní tlačítko uvnitř navbaru */
+  /* Spodní tlačítko fixně na bottom */
   .bottom-frame {
+    position: absolute;       /* fixně uvnitř navbaru */
+    bottom: 20px;             /* odsazení od spodku */
+    left: 50%;                /* centrování */
+    transform: translateX(-50%);
     width: 140px;
     height: 55px;
     background-color: #2e2121;
@@ -113,56 +117,18 @@
   .custom-frame:last-child {
     border-radius: 8px 8px 18px 18px;
   }
-
-  /* Google-style textbox */
-  .google-textbox-container {
-    position: relative;
-    margin-top: 20px;
-    width: 500px;
-  }
-
-  .google-textbox {
-    width: 500px;
-    height: 55px;
-    padding: 0 45px 0 15px;
-    font-family: 'Google Sans', sans-serif;
-    font-size: 16px;
-    border: none;
-    border-radius: 24px;
-    background-color: #fff;
-    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-  }
-
-  .google-textbox:focus {
-    outline: none;
-    box-shadow: 0 3px 12px rgba(32,33,36,0.3);
-    transform: translateY(-1px);
-  }
-
-  .google-textbox-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    pointer-events: none;
-  }
 </style>
 </head>
 
 <body>
 
 <div class="navbar">
-  <!-- Horní menu -->
   <div class="nav-items">
     <a class="nav-item" href="../home">Domov</a>
     <div class="nav-item">O web stránce</div>
     <div class="nav-item">Projekty</div>
   </div>
 
-  <!-- Dolní tlačítko uvnitř navbaru -->
   <a class="bottom-frame" href="https://www.youtube.com/@Pernicek_Cute" target="_blank">
     Můj kanál
   </a>
