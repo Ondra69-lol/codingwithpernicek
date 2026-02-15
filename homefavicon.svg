@@ -1,13 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- Roof -->
-  <polygon points="0,256 256,0 512,256" fill="#EA4335"></polygon> <!-- červená střechy -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 
-  <!-- Left wall -->
-  <rect x="0" y="256" width="256" height="256" fill="#4285F4"></rect> <!-- modrá levá stěna -->
+  <!-- střecha -->
+  <path d="M32 272 L256 64 L480 272 Q448 288 416 272 L256 128 L96 272 Q64 288 32 272 Z"
+        fill="#6750A4"/>
 
-  <!-- Right wall -->
-  <rect x="256" y="256" width="256" height="256" fill="#34A853"></rect> <!-- zelená pravá stěna -->
+  <!-- tělo domu -->
+  <path d="M96 256 L256 128 L416 256 V512 H96 Z"
+        fill="#D0BCFF"/>
 
-  <!-- Door -->
-  <rect x="208" y="336" width="96" height="176" fill="#FBBC05"></rect> <!-- žluté dveře -->
+  <!-- dveře (až na spodní okraj = 0 mezera) -->
+  <rect x="200" y="320" width="112" height="192" rx="0"
+        fill="#4F378B"/>
+
 </svg>
