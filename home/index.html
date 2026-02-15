@@ -31,8 +31,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* Horní menu + spodní tlačítko */
-    padding: 20px 0;
+    justify-content: space-between; /* Horní menu nahoře, tlačítko dole */
+    padding: 20px 0; /* horní a dolní padding */
+    box-sizing: border-box;
   }
 
   .nav-items {
@@ -54,7 +55,7 @@
     cursor: pointer;
   }
 
-  /* DOLNÍ TLAČÍTKO V NAVBARU */
+  /* Spodní tlačítko uvnitř navbaru */
   .bottom-frame {
     width: 140px;
     height: 55px;
@@ -116,7 +117,7 @@
     <div class="nav-item">Projects</div>
   </div>
 
-  <!-- Spodní tlačítko -->
+  <!-- Dolní tlačítko uvnitř navbaru -->
   <a class="bottom-frame" href="https://www.youtube.com/@Pernicek_Cute" target="_blank">
     Můj kanál
   </a>
