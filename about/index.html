@@ -14,20 +14,24 @@
     color: rgb(255, 255, 255);
     font-family: 'Google Sans', sans-serif;
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     user-select: none;
     justify-content: center;
     align-items: center;
+    padding: 2vh 1vw; /* malý padding pro malé obrazovky */
+    box-sizing: border-box;
   }
 
   /* CARD */
   .card {
     background-color: #2b2b34;
-    padding: 40px;
+    padding: clamp(20px, 4vh, 40px); /* responsivní padding */
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    width: 90%;
     max-width: 600px;
+    min-width: 280px;
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
@@ -40,29 +44,30 @@
   /* HEADER TEXT */
   .card h1 {
     margin: 0 0 20px 0;
-    font-size: 28px;
+    font-size: clamp(22px, 4vw, 28px); /* responsivní velikost textu */
     font-weight: 600;
-    color: #f1f3f4; /* jemný světlý odstín */
+    color: #f1f3f4;
   }
 
   /* BODY TEXT */
   .card p {
     margin: 0;
-    font-size: 18px;
+    font-size: clamp(16px, 2.5vw, 18px); /* responsivní font */
     line-height: 1.6;
-    color: #d0d0d0; /* světle šedý text */
+    color: #d0d0d0;
   }
 
   /* BUTTON */
   .card a {
     display: inline-block;
-    margin-top: 25px;
-    padding: 12px 28px;
-    background-color: #1a73e8; /* Google modrá */
+    margin-top: 3vh;
+    padding: clamp(10px, 2vh, 12px) clamp(20px, 4vw, 28px); /* responsivní padding */
+    background-color: #1a73e8;
     color: white;
     text-decoration: none;
     border-radius: 12px;
     font-weight: 600;
+    font-size: clamp(14px, 2vw, 18px); /* responsivní font */
     transition: background-color 0.2s ease;
   }
 
@@ -71,6 +76,7 @@
   }
 
 </style>
+
 </head>
 
 <body>
