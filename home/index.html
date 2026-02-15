@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coding With Pernicek - Domov</title>
 
-/*<link rel="icon" type="image/svg+xml" href="../homefavicon.svg">*/
-/*<link rel="apple-touch-icon" href="../homefavicon.svg">*/
+<link rel="icon" type="image/svg+xml" href="../homefavicon.svg">
+<link rel="apple-touch-icon" href="../homefavicon.svg">
 
 <link href="https://fonts.googleapis.com/css2?family=SN+Pro:wght@400;600&display=swap" rel="stylesheet">
 
@@ -31,7 +31,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
+    justify-content: space-between; /* Horní menu + spodní tlačítko */
+    padding: 20px 0;
+  }
+
+  .nav-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 
   .nav-item {
@@ -46,6 +54,25 @@
     cursor: pointer;
   }
 
+  /* DOLNÍ TLAČÍTKO V NAVBARU */
+  .bottom-frame {
+    width: 140px;
+    height: 55px;
+    background-color: #2e2121;
+    border-radius: 18px;
+    color: white;
+    text-align: center;
+    line-height: 55px;
+    font-size: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  .bottom-frame:hover {
+    background-color: #432f2f;
+  }
+
   /* MAIN CONTENT */
   .content-wrapper {
     margin-left: 180px; /* space for navbar */
@@ -54,7 +81,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    padding: 20px 0 80px 0; /* spodní padding pro fixní button */
+    padding: 20px;
   }
 
   .custom-frame {
@@ -76,38 +103,23 @@
   .custom-frame:last-child {
     border-radius: 8px 8px 18px 18px;
   }
-
-  /* FIXNÍ DOLNÍ TLAČÍTKO */
-  .bottom-frame {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 140px;
-    height: 55px;
-    background-color: #2e2121;
-    border-radius: 18px;
-    color: white;
-    text-align: center;
-    line-height: 55px;
-    font-size: 20px;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  }
-
-  .bottom-frame:hover {
-    background-color: #432f2f;
-  }
 </style>
 </head>
 
 <body>
 
 <div class="navbar">
-  <div class="nav-item">Home</div>
-  <div class="nav-item">About</div>
-  <div class="nav-item">Projects</div>
+  <!-- Horní menu -->
+  <div class="nav-items">
+    <div class="nav-item">Home</div>
+    <div class="nav-item">About</div>
+    <div class="nav-item">Projects</div>
+  </div>
+
+  <!-- Spodní tlačítko -->
+  <a class="bottom-frame" href="https://www.youtube.com/@Pernicek_Cute" target="_blank">
+    Můj kanál
+  </a>
 </div>
 
 <div class="content-wrapper">
@@ -115,11 +127,6 @@
   <div class="custom-frame">Frame 2</div>
   <div class="custom-frame">Frame 3</div>
 </div>
-
-<!-- FIXNÍ DOLNÍ TLAČÍTKO -->
-<a class="bottom-frame" href="https://www.youtube.com/@Pernicek_Cute" target="_blank">
-  Můj kanál
-</a>
 
 </body>
 </html>
