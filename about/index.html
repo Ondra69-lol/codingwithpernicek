@@ -19,21 +19,25 @@
     user-select: none;
     justify-content: center;
     align-items: center;
-    padding: 2vh 1vw; /* malý padding pro malé obrazovky */
+    padding: 2vh 2vw;
     box-sizing: border-box;
   }
 
-  /* CARD */
+  /* CARD - škálovatelná */
   .card {
     background-color: #2b2b34;
-    padding: clamp(20px, 4vh, 40px); /* responsivní padding */
+    padding: clamp(20px, 4vh, 40px);
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     width: 90%;
     max-width: 600px;
-    min-width: 280px;
+    min-width: 260px;
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .card:hover {
@@ -41,33 +45,32 @@
     box-shadow: 0 12px 32px rgba(0,0,0,0.5);
   }
 
-  /* HEADER TEXT */
+  /* HEADER TEXT - responsivní */
   .card h1 {
-    margin: 0 0 20px 0;
-    font-size: clamp(22px, 4vw, 28px); /* responsivní velikost textu */
+    margin: 0 0 2vh 0;
+    font-size: clamp(20px, 5vw, 28px);
     font-weight: 600;
     color: #f1f3f4;
   }
 
-  /* BODY TEXT */
+  /* BODY TEXT - responsivní */
   .card p {
-    margin: 0;
-    font-size: clamp(16px, 2.5vw, 18px); /* responsivní font */
+    margin: 0 0 3vh 0;
+    font-size: clamp(14px, 3vw, 18px);
     line-height: 1.6;
     color: #d0d0d0;
   }
 
-  /* BUTTON */
+  /* BUTTON - responsivní */
   .card a {
     display: inline-block;
-    margin-top: 3vh;
-    padding: clamp(10px, 2vh, 12px) clamp(20px, 4vw, 28px); /* responsivní padding */
+    padding: clamp(10px, 2.5vh, 14px) clamp(20px, 5vw, 28px);
     background-color: #1a73e8;
     color: white;
     text-decoration: none;
     border-radius: 12px;
     font-weight: 600;
-    font-size: clamp(14px, 2vw, 18px); /* responsivní font */
+    font-size: clamp(14px, 3vw, 18px);
     transition: background-color 0.2s ease;
   }
 
@@ -75,8 +78,31 @@
     background-color: #1669c1;
   }
 
-</style>
+  /* MEDIA QUERY pro malé telefony */
+  @media (max-width: 480px) {
+    body {
+      padding: 1vh 3vw;
+    }
 
+    .card {
+      width: 95%;
+      padding: clamp(15px, 3vh, 30px);
+    }
+
+    .card h1 {
+      font-size: clamp(18px, 6vw, 24px);
+    }
+
+    .card p {
+      font-size: clamp(12px, 4vw, 16px);
+    }
+
+    .card a {
+      font-size: clamp(12px, 4vw, 16px);
+      padding: clamp(8px, 2vh, 12px) clamp(16px, 4vw, 24px);
+    }
+  }
+</style>
 </head>
 
 <body>
