@@ -8,24 +8,78 @@
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+  /* BODY */
   body {
     background-color: rgb(18, 18, 21);
     color: rgb(255, 255, 255);
     font-family: 'Google Sans', sans-serif;
-    user-select: none;
     margin: 0;
     height: 100vh;
     display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  
+  /* CARD */
+  .card {
+    background-color: #2b2b34;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    max-width: 600px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  }
+
+  /* HEADER TEXT */
+  .card h1 {
+    margin: 0 0 20px 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #f1f3f4; /* jemný světlý odstín */
+  }
+
+  /* BODY TEXT */
+  .card p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #d0d0d0; /* světle šedý text */
+  }
+
+  /* BUTTON */
+  .card a {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 28px;
+    background-color: #1a73e8; /* Google modrá */
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+
+  .card a:hover {
+    background-color: #1669c1;
+  }
+
 </style>
 </head>
 
 <body>
 
-<div class="content-wrapper">
-  <label>Ahoj, tohle je stránka pro zábavu. Zatím tady nic zábavného není ale doufám že brzy bude!</label>
+<div class="card">
+  <h1>O Web Stránce</h1>
+  <p>
+    Ahoj, tohle je stránka pro zábavu. Zatím tady nic zábavného není, ale doufám, že brzy bude!
+  </p>
+  <a href="../home">Zpět na Domov</a>
 </div>
 
 </body>
