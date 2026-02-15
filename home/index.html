@@ -47,13 +47,14 @@
   }
 
   /* MAIN CONTENT */
-  .content {
+  .content-wrapper {
     margin-left: 180px; /* space for navbar */
-    width: 100%;
+    width: calc(100% - 180px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    position: relative;
+    padding: 20px 0 80px 0; /* spodní padding pro fixní button */
   }
 
   .custom-frame {
@@ -68,14 +69,15 @@
     font-size: 20px;
   }
 
+  /* Zaoblení horního a dolního rámu */
   .custom-frame:first-child {
     border-radius: 18px 18px 8px 8px;
   }
-
-  .custom-frame:nth-last-of-type(1) {
+  .custom-frame:last-child {
     border-radius: 8px 8px 18px 18px;
   }
 
+  /* FIXNÍ DOLNÍ TLAČÍTKO */
   .bottom-frame {
     position: fixed;
     bottom: 20px;
@@ -93,6 +95,10 @@
     text-decoration: none;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   }
+
+  .bottom-frame:hover {
+    background-color: #432f2f;
+  }
 </style>
 </head>
 
@@ -102,17 +108,18 @@
   <div class="nav-item">Home</div>
   <div class="nav-item">About</div>
   <div class="nav-item">Projects</div>
-
-  <a class="bottom-frame" href="https://www.youtube.com/@Pernicek_Cute" target="_blank">
-  Můj kanál
-</a>
 </div>
 
-<div class="content">
+<div class="content-wrapper">
   <div class="custom-frame">Frame 1</div>
   <div class="custom-frame">Frame 2</div>
   <div class="custom-frame">Frame 3</div>
 </div>
+
+<!-- FIXNÍ DOLNÍ TLAČÍTKO -->
+<a class="bottom-frame" href="https://www.youtube.com/@Pernicek_Cute" target="_blank">
+  Můj kanál
+</a>
 
 </body>
 </html>
