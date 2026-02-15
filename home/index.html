@@ -64,40 +64,44 @@
   }
 
   /* Spodní tlačítko */
-  .bottom-frame {
-    position: absolute;
-    bottom: 3vh; /* škálovatelná vertikální pozice */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: clamp(50px, 7vh, 60px);
-    background-color: #2e2121;
-    border-radius: 18px;
-    color: white;
-    text-align: center;
-    line-height: clamp(50px, 7vh, 60px);
-    font-size: clamp(16px, 1.5vw, 20px);
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: background-color 0.2s ease;
-  }
+  /* Spodní tlačítko - jen Y automaticky */
+.bottom-frame {
+  position: fixed;
+  bottom: calc(5% + env(safe-area-inset-bottom)); /* vertikální pozice škálovatelná */
+  left: 50%; /* horizontálně stále vycentrované */
+  transform: translateX(-50%); /* jen X transformace */
+  width: 80%;
+  max-width: 220px;
+  min-width: 150px;
+  height: clamp(50px, 7vh, 60px);
+  background-color: #2e2121;
+  border-radius: 18px;
+  color: white;
+  text-align: center;
+  line-height: clamp(50px, 7vh, 60px);
+  font-size: clamp(16px, 1.5vw, 20px);
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: background-color 0.2s ease;
+}
 
-  .bottom-frame:hover {
-    background-color: #432f2f;
-  }
+.bottom-frame:hover {
+  background-color: #432f2f;
+}
 
-  /* Verze nad spodním tlačítkem */
-  .version-label {
-    position: absolute;
-    bottom: 10vh;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #aaa;
-    font-size: clamp(12px, 1vw, 14px);
-    font-weight: 500;
-    text-align: center;
-  }
+/* Version label nad tlačítkem - jen Y */
+.version-label {
+  position: fixed;
+  bottom: calc(12% + env(safe-area-inset-bottom)); /* vertikální pozice nad tlačítkem */
+  left: 50%; /* horizontálně stále vycentrované */
+  transform: translateX(-50%); /* jen X transformace */
+  color: #aaa;
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 500;
+  text-align: center;
+}
+
 
   /* MAIN CONTENT */
   .content-wrapper {
