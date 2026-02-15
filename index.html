@@ -19,7 +19,6 @@
     position: relative;
     width: 60px;
     height: 60px;
-    animation: spin 1s linear infinite;
   }
 
   .spinner div {
@@ -27,12 +26,36 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* začínají doprostřed */
   }
 
-  .spinner div:nth-child(1) { background: #4285F4; top: 0; left: 50%; transform: translateX(-50%); }
-  .spinner div:nth-child(2) { background: #EA4335; top: 50%; right: 0; transform: translateY(-50%); }
-  .spinner div:nth-child(3) { background: #FBBC05; bottom: 0; left: 50%; transform: translateX(-50%); }
-  .spinner div:nth-child(4) { background: #34A853; top: 50%; left: 0; transform: translateY(-50%); }
+  .spinner div:nth-child(1) { background: #4285F4; }
+  .spinner div:nth-child(2) { background: #EA4335; }
+  .spinner div:nth-child(3) { background: #FBBC05; }
+  .spinner div:nth-child(4) { background: #34A853; }
+
+  /* animace "rozletu" do kruhu */
+  @keyframes spread {
+    0%   { transform: translate(-50%, -50%); }
+    100% { }
+  }
+
+  .spinner.animate div:nth-child(1) { animation: move1 0.5s forwards; }
+  .spinner.animate div:nth-child(2) { animation: move2 0.5s forwards; }
+  .spinner.animate div:nth-child(3) { animation: move3 0.5s forwards; }
+  .spinner.animate div:nth-child(4) { animation: move4 0.5s forwards; }
+
+  @keyframes move1 { to { top: 0; left: 50%; transform: translateX(-50%); } }
+  @keyframes move2 { to { top: 50%; right: 0; left: auto; transform: translateY(-50%); } }
+  @keyframes move3 { to { bottom: 0; top: auto; left: 50%; transform: translateX(-50%); } }
+  @keyframes move4 { to { top: 50%; left: 0; right: auto; transform: translateY(-50%); } }
+
+  /* po rozletu spinner začne otáčet */
+  .spinner.spin {
+    animation: spin 1s linear infinite;
+  }
 
   @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -41,7 +64,7 @@
 </style>
 </head>
 <body>
-  <div class="spinner">
+  <div class="spinner" id="spinner">
     <div></div>
     <div></div>
     <div></div>
@@ -49,7 +72,19 @@
   </div>
 
   <script>
-    // Redirect to home after 4 seconds
+    const spinner = document.getElementById('spinner');
+
+    // Po 200ms "rozletí" tečky do spinneru
+    setTimeout(() => {
+      spinner.classList.add('animate');
+    }, 200);
+
+    // Po 700ms (200ms + 500ms animace) začne otáčení
+    setTimeout(() => {
+      spinner.classList.add('spin');
+    }, 700);
+
+    // Redirect na home po 4s
     setTimeout(() => {
       window.location.href = "home";
     }, 4000);
