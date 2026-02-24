@@ -5,23 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coding With Pernicek - O Web Stránce</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
   /* BODY */
-  body {
-    background-color: rgb(18, 18, 21);
-    color: rgb(255, 255, 255);
-    font-family: 'Comfortaa', sans-serif;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    user-select: none;
-    justify-content: center;
-    align-items: center;
-    padding: 2vh 2vw;
-    box-sizing: border-box;
-  }
+  @font-face {
+  font-family: 'GoogleSansFlexLocal';
+  src: url('../fonts/GoogleSansFlex-Regular.ttf') format('truetype');
+  font-weight: 100 1000;
+  font-display: swap;
+}
+
+/* ===== BODY ===== */
+body {
+  background-color: rgb(18, 18, 21);
+  font-family: 'GoogleSansFlexLocal', sans-serif;
+  font-variation-settings:
+    "wght" 500,
+    "ROND" 100;
+  user-select: none;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+}
 
   /* CARD - škálovatelná */
   .card {
