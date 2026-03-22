@@ -2,11 +2,80 @@
 <html>
 <head>
   <title>Moje PS4 App</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0a0f2c, #1b2a6b);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 0 40px rgba(0, 150, 255, 0.3);
+      text-align: center;
+      width: 400px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 90%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      border: none;
+      outline: none;
+      font-size: 18px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    button {
+      width: 95%;
+      padding: 15px;
+      border-radius: 20px;
+      border: none;
+      font-size: 20px;
+      background: linear-gradient(135deg, #0070ff, #00c6ff);
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0,150,255,0.8);
+    }
+
+    /* 🎮 focus (pro ovladač) */
+    button:focus, input:focus {
+      outline: 3px solid #00c6ff;
+      box-shadow: 0 0 20px #00c6ff;
+    }
+  </style>
 </head>
+
 <body>
+
+<div class="container">
   <h1>Moje appka 🎮</h1>
-  
+
   <input type="text" placeholder="Napiš něco">
+
   <button onclick="alert('Klik!')">Klikni</button>
+</div>
+
 </body>
 </html>
