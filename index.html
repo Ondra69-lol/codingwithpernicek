@@ -2,101 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PS4 Loading</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-<script type="importmap">
-{
-  "imports": {
-    "@material/web/": "https://esm.run/@material/web/"
-  }
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(120deg, #0a0f2c, #1b2a6b);
+  font-family: Arial, sans-serif;
+  color: white;
+  overflow: hidden;
 }
-</script>
 
-<script type="module">
-import '@material/web/all.js';
-import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+/* CENTER */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
 
-document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
-</script>
+/* LOGO TEXT */
+.title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+/* LOADING BAR */
+.bar {
+  width: 400px;
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0070ff, #00c6ff);
+  box-shadow: 0 0 15px #00c6ff;
+  animation: load 4s linear forwards;
+}
+
+/* ANIMATION */
+@keyframes load {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* FADE TEXT */
+.subtitle {
+  margin-top: 15px;
+  font-size: 14px;
+  opacity: 0.6;
+}
+</style>
 </head>
 
 <body>
 
-<form>
-  <!-- <md-circular-progress indeterminate></md-circular-progress> -->
-  <md-linear-progress indeterminate></md-linear-progress>
-  <p>Loading: codingwithpernicek.com/ps4/...</p>
-</form>
+<div class="container">
+  <div class="title">Starting application… 🎮</div>
 
-<style>
-:root{
-  color-scheme: light dark;
-}
+  <div class="bar">
+    <div class="fill"></div>
+  </div>
 
-/* LIGHT MODE */
-@media (prefers-color-scheme: light){
-  body{
-    background:#ffffff;
-    color:#000000;
-    font-family:Roboto, sans-serif;
-  }
+  <div class="subtitle">codingwithpernicek.com/ps4</div>
+</div>
 
-  md-circular-progress{
-    --md-circular-progress-active-indicator-color:#6750A4;
-  }
+<script>
+setTimeout(() => {
+  window.location.href = "ps4";
+}, 4000);
+</script>
 
-  md-linear-progress{
-    --md-linear-progress-active-indicator-color:#6750A4;
-    --md-linear-progress-track-color:#E7E0EC;
-  }
-}
-
-/* DARK MODE */
-@media (prefers-color-scheme: dark){
-  body{
-    background:#121212;
-    color:#ffffff;
-    font-family:Roboto, sans-serif;
-  }
-
-  md-circular-progress{
-    --md-circular-progress-active-indicator-color:#D0BCFF;
-  }
-
-  md-linear-progress{
-    --md-linear-progress-active-indicator-color:#D0BCFF;
-    --md-linear-progress-track-color:#3B3643;
-  }
-}
-
-form{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:24px;
-  height:100vh;
-}
-
-md-linear-progress{
-  width:400px;
-  border-radius:4px;
-  overflow:hidden;
-}
-
-md-circular-progress{
-  width:64px;
-  height:64px;
-}
-</style>
-
-  <script>
-    // Redirect to home after 4 seconds
-    setTimeout(() => {
-      window.location.href = "ps4";
-    }, 4000);
-  </script>
 </body>
 </html>
