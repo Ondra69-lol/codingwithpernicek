@@ -5,20 +5,24 @@
 <title>PS4 Loading</title>
 
 <style>
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%; /* důležité, aby gradient pokryl celou výšku */
+}
+
+body {
   background: linear-gradient(120deg, #0a0f2c, #1b2a6b);
   font-family: Arial, sans-serif;
   color: white;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* CENTER */
 .container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   text-align: center;
 }
 
