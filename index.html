@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fullscreen Check</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Overlay */
+  #overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  /* Box */
+  #box {
+    padding: 30px 50px;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  /* Light mode */
+  @media (prefers-color-scheme: light) {
+    #overlay {
+      background: rgba(255,255,255,0.9);
+    }
+    #box {
+      background: white;
+      color: black;
+    }
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    #overlay {
+      background: rgba(0,0,0,0.9);
+    }
+    #box {
+      background: black;
+      color: white;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div id="overlay">
+  <div id="box">This page isn't in fullscreen.</div>
+</div>
+
+<script>
+  const overlay = document.getElementById("overlay");
+
+  function checkFullscreen() {
+    if (document.fullscreenElement) {
+      overlay.style.display = "none";
+    } else {
+      overlay.style.display = "flex";
+    }
+  }
+
+  // initial check
+  checkFullscreen();
+
+  // when fullscreen changes
+  document.addEventListener("fullscreenchange", checkFullscreen);
+
+  // optional: also detect window resize (for safety)
+  window.addEventListener("resize", checkFullscreen);
+</script>
+
+</body>
+</html>
