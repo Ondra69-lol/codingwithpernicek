@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Moje Super Stránka</title>
   <!-- Import Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -12,12 +11,42 @@
     h1 {
       font-weight: 700; /* tučnější nadpis */
     }
+
+    button {
+      background-color: blue;
+      border-radius: 100%;
+      width: 80px;   /* šířka */
+      height: 80px;  /* výška */
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+<h1>codingwithpernicek.com</h1>
+<button onclick="alertBox()">Klikni mě pro text</button>
+<button onclick="confirmBox()">Klikni mě pro možnost</button>
+<button onclick="promptBox()">Klikni mě pro zadání</button>
+
+<script>
+function alertBox() {
+  // Zobrazí prompt s textem a výchozí hodnotou
+  window.alert("Kliknul(a) si mě! :)");
+}
+
+function confirmBox() {
+  // Zobrazí prompt s textem a výchozí hodnotou
+  window.confirm("Vyber si jedno");
+}
+
+function promptBox() {
+  // Zobrazí prompt s textem a výchozí hodnotou
+  window.prompt("Napiš něco");
+}
+</script>
 
 </body>
 </html>
