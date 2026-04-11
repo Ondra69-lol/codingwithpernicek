@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Stránka nenalezena</title>
+
+  <style>
+    @font-face {
+      font-family: "GoogleSansFlex";
+      src: url("GoogleSansFlex-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "GoogleSansFlex", sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
+      color: white;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    h1 {
+      font-size: 8rem;
+      letter-spacing: 4px;
+      color: #ff4d6d;
+      text-shadow: 0 0 30px rgba(255, 77, 109, 0.5);
+    }
+
+    p {
+      font-size: 1.3rem;
+      opacity: 0.85;
+      margin-top: 10px;
+    }
+
+    .btn {
+      margin-top: 25px;
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background: #ff4d6d;
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+      box-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+    }
+
+    .btn:hover {
+      transform: scale(1.08);
+      background: #ff2e55;
+    }
+
+    .float {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: floatUp 6s infinite linear;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(-10vh);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- floating particles -->
+  <script>
+    for (let i = 0; i < 25; i++) {
+      let dot = document.createElement("div");
+      dot.className = "float";
+      dot.style.left = Math.random() * 100 + "vw";
+      dot.style.animationDuration = (3 + Math.random() * 5) + "s";
+      dot.style.opacity = Math.random();
+      document.body.appendChild(dot);
+    }
+  </script>
+
+  <div class="container">
+    <h1>404</h1>
+    <p>Ups… tahle stránka se někde ztratila ve vesmíru 🌌</p>
+    <a class="btn" href="/">Vrátit se domů</a>
+  </div>
+
+</body>
+</html>
