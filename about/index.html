@@ -3,110 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coding With Pernicek - O Web Stránce</title>
-
+<title>Coding With Pernicek - Cosmic About</title>
 
 <style>
-  /* BODY */
-  @font-face {
+
+/* ===== FONT ===== */
+@font-face {
   font-family: 'GoogleSansFlexLocal';
   src: url('../fonts/GoogleSansFlex-Regular.ttf') format('truetype');
   font-weight: 100 1000;
   font-display: swap;
 }
 
-/* ===== BODY ===== */
+/* ===== COSMIC BACKGROUND ===== */
 body {
-  background-color: rgb(18, 18, 21);
-  font-family: 'GoogleSansFlexLocal', sans-serif;
-  font-variation-settings:
-    "wght" 500,
-    "ROND" 100;
-  user-select: none;
   margin: 0;
   min-height: 100vh;
   display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'GoogleSansFlexLocal', sans-serif;
+  user-select: none;
+  color: white;
+
+  background: radial-gradient(circle at 20% 30%, #1a1f3a, transparent 40%),
+              radial-gradient(circle at 80% 70%, #2a0f3d, transparent 45%),
+              radial-gradient(circle at 50% 50%, #050510, #000);
+
+  animation: bgShift 18s ease-in-out infinite alternate;
 }
 
-  /* CARD - škálovatelná */
+@keyframes bgShift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(25deg); }
+}
+
+/* ===== STAR FIELD ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background-image:
+    radial-gradient(1px 1px at 10px 20px, white, transparent),
+    radial-gradient(1px 1px at 120px 80px, white, transparent),
+    radial-gradient(2px 2px at 200px 140px, white, transparent),
+    radial-gradient(1px 1px at 300px 220px, white, transparent);
+
+  background-size: 400px 400px;
+  opacity: 0.35;
+
+  animation: starsMove 60s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes starsMove {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-1000px); }
+}
+
+/* ===== GLASS CARD ===== */
+.card {
+  width: 90%;
+  max-width: 620px;
+  min-width: 260px;
+
+  padding: clamp(24px, 5vh, 50px);
+  border-radius: 22px;
+
+  text-align: center;
+
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255,255,255,0.12);
+
+  box-shadow:
+    0 0 40px rgba(120,80,255,0.15),
+    0 10px 40px rgba(0,0,0,0.6);
+
+  transition: 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 60px rgba(120,80,255,0.3),
+    0 20px 60px rgba(0,0,0,0.7);
+}
+
+/* ===== TITLE ===== */
+.card h1 {
+  margin: 0 0 16px 0;
+  font-size: clamp(22px, 5vw, 34px);
+
+  background: linear-gradient(90deg, #7c5cff, #00e5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== TEXT ===== */
+.card p {
+  margin: 0 0 28px 0;
+  font-size: clamp(14px, 3vw, 18px);
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+}
+
+/* ===== BUTTON ===== */
+.card a {
+  display: inline-block;
+
+  padding: 14px 26px;
+  border-radius: 14px;
+
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+
+  background: linear-gradient(135deg, #ff4fd8, #6c5cff);
+  box-shadow: 0 0 25px rgba(120,80,255,0.3);
+
+  transition: 0.25s ease;
+}
+
+.card a:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 40px rgba(255,80,200,0.5);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
   .card {
-    background-color: #2b2b34;
-    padding: clamp(20px, 4vh, 40px);
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    width: 90%;
-    max-width: 600px;
-    min-width: 260px;
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 92%;
+    padding: 22px;
   }
 
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.5);
-  }
-
-  /* HEADER TEXT - responsivní */
   .card h1 {
-    margin: 0 0 2vh 0;
-    font-size: clamp(20px, 5vw, 28px);
-    font-weight: 600;
-    color: #f1f3f4;
+    font-size: 22px;
   }
 
-  /* BODY TEXT - responsivní */
   .card p {
-    margin: 0 0 3vh 0;
-    font-size: clamp(14px, 3vw, 18px);
-    line-height: 1.6;
-    color: #d0d0d0;
+    font-size: 14px;
   }
+}
 
-  /* BUTTON - responsivní */
-  .card a {
-    display: inline-block;
-    padding: clamp(10px, 2.5vh, 14px) clamp(20px, 5vw, 28px);
-    background-color: #1a73e8;
-    color: white;
-    text-decoration: none;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: clamp(14px, 3vw, 18px);
-    transition: background-color 0.2s ease;
-  }
-
-  .card a:hover {
-    background-color: #1669c1;
-  }
-
-  /* MEDIA QUERY pro malé telefony */
-  @media (max-width: 480px) {
-    body {
-      padding: 1vh 3vw;
-    }
-
-    .card {
-      width: 95%;
-      padding: clamp(15px, 3vh, 30px);
-    }
-
-    .card h1 {
-      font-size: clamp(18px, 6vw, 24px);
-    }
-
-    .card p {
-      font-size: clamp(12px, 4vw, 16px);
-    }
-
-    .card a {
-      font-size: clamp(12px, 4vw, 16px);
-      padding: clamp(8px, 2vh, 12px) clamp(16px, 4vw, 24px);
-    }
-  }
 </style>
 </head>
 
@@ -115,18 +162,21 @@ body {
 <div class="card">
   <h1>O Web Stránce</h1>
   <p>
-    Ahoj, tohle je stránka pro zábavu. Zatím tady nic zábavného není, ale doufám, že brzy bude!
+    Ahoj 👋 Tohle je malý projekt pro zábavu ve vesmírném stylu.
+    Zatím je to jednoduché, ale postupně se to může rozrůst do celé galaxie nápadů 🚀✨
   </p>
-  <a href="../home">Zpět na Domov</a>
+
+  <a href="../space-home">Zpět na Domov</a>
 </div>
 
 </body>
 
-  <script>
+<script>
   // ===== OCHRANA: POUZE SKRIPT/REFERRER =====
   const openedViaScript = window.opener || document.referrer.includes("codingwithpernicek.com");
   if (!openedViaScript) {
     window.location.href = "https://codingwithpernicek.com";
   }
 </script>
+
 </html>
