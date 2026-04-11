@@ -271,5 +271,33 @@ function toggleNav() {
 btn.addEventListener("click", toggleNav);
 </script>
 
+  <script>
+(function () {
+
+  function getCookie(name) {
+    return document.cookie.split("; ")
+      .find(row => row.startsWith(name + "="))
+      ?.split("=")[1];
+  }
+
+  const key = getCookie("space_key");
+
+  // ❌ pokud cookie neexistuje → nic nedělá (nebo můžeš redirectnout)
+  if (!key) return;
+
+  const url = new URL(window.location.href);
+
+  // ✔ pokud už key v URL je → stop
+  if (url.searchParams.get("key")) return;
+
+  // 🌌 přidání key do URL
+  url.searchParams.set("key", key);
+
+  // 🔁 replace = bez reload loopu v historii
+  window.location.replace(url.toString());
+
+})();
+</script>
+  
 </body>
 </html>
