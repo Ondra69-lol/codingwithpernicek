@@ -7,7 +7,7 @@
 
 <style>
 
-/* ===== FONT LOAD (LOKÁLNÍ) ===== */
+/* ===== FONT LOAD ===== */
 @font-face {
   font-family: 'GoogleSansFlexLocal';
   src: url('../fonts/GoogleSansFlex-Regular.ttf') format('truetype');
@@ -15,14 +15,17 @@
   font-display: swap;
 }
 
-/* ===== COSMIC BACKGROUND ===== */
+/* ===== BODY ===== */
 body {
   margin: 0;
   min-height: 100vh;
   overflow: hidden;
+
   font-family: 'GoogleSansFlexLocal', sans-serif;
   user-select: none;
   color: white;
+
+  display: flex;
 
   background: radial-gradient(circle at 20% 20%, #1a1f3a, transparent 40%),
               radial-gradient(circle at 80% 70%, #2a0f3d, transparent 45%),
@@ -31,39 +34,41 @@ body {
   animation: bgShift 20s ease-in-out infinite alternate;
 }
 
-/* jemný pohyb vesmíru */
 @keyframes bgShift {
   0% { filter: hue-rotate(0deg); }
   100% { filter: hue-rotate(25deg); }
 }
 
-/* ===== STAR LAYER ===== */
+/* ===== STARS ===== */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
+
   background-image:
     radial-gradient(2px 2px at 20px 30px, white, transparent),
     radial-gradient(1px 1px at 80px 90px, white, transparent),
     radial-gradient(1px 1px at 160px 120px, white, transparent),
     radial-gradient(2px 2px at 300px 200px, white, transparent);
-  background-repeat: repeat;
+
   background-size: 400px 400px;
-  opacity: 0.4;
+  opacity: 0.35;
+
   animation: starsMove 60s linear infinite;
   pointer-events: none;
 }
 
 @keyframes starsMove {
-  from { transform: translateY(0px); }
+  from { transform: translateY(0); }
   to { transform: translateY(-1000px); }
 }
 
-/* ===== BUTTON ===== */
+/* ===== TOGGLE BUTTON ===== */
 #toggleBtn {
   position: fixed;
   top: 15px;
-  z-index: 1001;
+  left: 15px;
+  z-index: 1000;
 
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(10px);
@@ -84,13 +89,12 @@ body::before {
   box-shadow: 0 0 20px rgba(140,120,255,0.5);
 }
 
-/* ===== NAVBAR (GLASS SPACE PANEL) ===== */
+/* ===== NAVBAR ===== */
 .navbar {
-  position: fixed;
-  left: 0;
-  top: 0;
   width: clamp(160px, 12vw, 240px);
   height: 100vh;
+
+  flex-shrink: 0;
 
   background: rgba(10, 10, 25, 0.6);
   backdrop-filter: blur(18px);
@@ -100,11 +104,11 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2vh 0;
 
   transition: transform 0.35s ease;
 }
 
+/* COLLAPSE FIX */
 .navbar.collapsed {
   transform: translateX(-100%);
 }
@@ -175,11 +179,9 @@ body::before {
   box-shadow: 0 0 40px rgba(255,80,200,0.5);
 }
 
-/* ===== CONTENT ===== */
+/* ===== CONTENT FIXED ===== */
 .content-wrapper {
-  margin-left: clamp(160px, 12vw, 240px);
-  width: calc(100% - 240px);
-
+  flex: 1;
   padding: 20px;
 
   display: flex;
@@ -187,11 +189,6 @@ body::before {
   align-items: center;
 
   transition: 0.35s ease;
-}
-
-.content-wrapper.expanded {
-  margin-left: 0;
-  width: 100%;
 }
 
 /* ===== CARDS ===== */
@@ -219,20 +216,8 @@ body::before {
   box-shadow: 0 0 25px rgba(100,200,255,0.25);
 }
 
-/* ===== SCROLLBAR ===== */
-.content-wrapper::-webkit-scrollbar {
-  width: 8px;
-}
-.content-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(120,120,255,0.4);
-  border-radius: 10px;
-}
-
 /* ===== MOBILE ===== */
 @media (max-width: 600px) {
-  .content-wrapper {
-    padding: 10px;
-  }
   .custom-frame {
     width: 90%;
   }
@@ -242,14 +227,6 @@ body::before {
 </head>
 
 <body>
-
-<script>
-  // ===== OCHRANA: POUZE SKRIPT/REFERRER =====
-  const openedViaScript = window.opener || document.referrer.includes("codingwithpernicek.com");
-  if (!openedViaScript) {
-    window.location.href = "https://codingwithpernicek.com";
-  }
-</script>
 
 <button id="toggleBtn">☰</button>
 
@@ -273,6 +250,18 @@ body::before {
   <div class="custom-frame">Frame 4</div>
   <div class="custom-frame">Frame 5</div>
 </div>
+
+<script>
+const navbar = document.querySelector(".navbar");
+const btn = document.getElementById("toggleBtn");
+
+function toggleNav() {
+  navbar.classList.toggle("collapsed");
+  btn.textContent = navbar.classList.contains("collapsed") ? "☰" : "✖";
+}
+
+btn.addEventListener("click", toggleNav);
+</script>
 
 </body>
 </html>
