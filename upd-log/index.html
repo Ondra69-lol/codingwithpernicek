@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding With Pernicek - Update Log</title>
+
+<style>
+
+/* ===== FONT ===== */
+@font-face {
+  font-family: 'GoogleSansFlexLocal';
+  src: url('../fonts/GoogleSansFlex-Regular.ttf') format('truetype');
+}
+
+/* ===== GLOBAL LOCK (TEXT SELECTION OFF 🚫) ===== */
+* {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ===== BACKGROUND ===== */
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'GoogleSansFlexLocal', sans-serif;
+  color: white;
+  overflow-x: hidden;
+
+  background: radial-gradient(circle at 20% 20%, #1a1f3a, transparent 40%),
+              radial-gradient(circle at 80% 70%, #2a0f3d, transparent 45%),
+              radial-gradient(circle at 50% 50%, #050510, #000);
+
+  animation: bgShift 18s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(25deg); }
+}
+
+/* ===== STARS ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, white, transparent),
+    radial-gradient(1px 1px at 120px 80px, white, transparent),
+    radial-gradient(2px 2px at 200px 140px, white, transparent),
+    radial-gradient(1px 1px at 300px 220px, white, transparent);
+
+  background-size: 400px 400px;
+  opacity: 0.35;
+
+  animation: starsMove 60s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes starsMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  padding: 40px 20px 10px;
+}
+
+.header h1 {
+  font-size: clamp(26px, 5vw, 40px);
+  margin: 0;
+
+  background: linear-gradient(90deg, #7c5cff, #00e5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== UPDATE CARD ===== */
+.update {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px;
+
+  padding: 18px;
+  margin: 14px 0;
+
+  transition: 0.25s ease;
+}
+
+.update:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px rgba(120,80,255,0.25);
+}
+
+.date { font-size: 12px; opacity: 0.6; }
+.title { font-size: 18px; font-weight: 600; margin-top: 6px; }
+.text { font-size: 14px; opacity: 0.85; line-height: 1.5; }
+
+/* ===== BACK BUTTON ===== */
+.back {
+  display: inline-block;
+  margin: 30px auto;
+  text-decoration: none;
+  color: white;
+
+  padding: 12px 20px;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #ff4fd8, #6c5cff);
+  transition: 0.2s ease;
+}
+
+.back:hover {
+  transform: scale(1.05);
+}
+
+/* ===== LOCK SCREEN ===== */
+.lock {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="lock" id="lock">NAČÍTÁNÍ GALAXIE...</div>
+
+<div class="header">
+  <h1>UPDATE LOG</h1>
+  <p>Galaktická historie změn 🚀</p>
+</div>
+
+<div class="container">
+
+  <div class="update">
+    <div class="date">11. 4. 2026</div>
+    <div class="title">🌌 Space redesign</div>
+    <div class="text">Celý web dostal vesmírný redesign.</div>
+  </div>
+
+  <div class="update">
+    <div class="date">10. 4. 2026</div>
+    <div class="title">🚀 Navbar system</div>
+    <div class="text">Přidán nový collapse systém.</div>
+  </div>
+
+  <div style="text-align:center;">
+    <a class="back" href="/space-home">Zpět</a>
+  </div>
+
+</div>
+
+<script>
+/* ===== OCHRANA ===== */
+(function () {
+  const allowed = document.referrer.includes("codingwithpernicek.com");
+
+  if (!allowed) {
+    document.body.innerHTML = "❌ Nepovolený přístup";
+    throw new Error("Blocked direct access");
+  }
+
+  document.getElementById("lock").style.display = "none";
+})();
+</script>
+
+<script>
+/* ===== RIGHT CLICK BLOCK ===== */
+document.addEventListener("contextmenu", e => e.preventDefault());
+</script>
+
+</body>
+</html>
