@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Token Generator 🚀</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: radial-gradient(circle at center, #0a0f2c, #000000);
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    h1 {
+        margin-top: 20vh;
+        font-size: 3em;
+        text-shadow: 0 0 20px cyan;
+    }
+
+    .token-box {
+        margin-top: 20px;
+        font-size: 1.2em;
+        background: rgba(255,255,255,0.1);
+        padding: 15px;
+        border-radius: 12px;
+        display: inline-block;
+        backdrop-filter: blur(5px);
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        background: cyan;
+        color: black;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 0 15px cyan;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.1);
+    }
+
+    /* stars */
+    .stars {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+
+    .stars::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        box-shadow:
+        100px 200px white, 300px 400px white, 500px 100px white,
+        700px 300px white, 900px 200px white, 200px 600px white,
+        400px 800px white, 600px 700px white;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<h1>🚀 Space Token</h1>
+
+<div class="token-box" id="tokenBox">
+    Generating token...
+</div>
+
+<br>
+<button onclick="generate()">🔁 Generate New</button>
+
+<script>
+function generateHexToken(length = 32) {
+    const array = new Uint8Array(length / 2);
+    crypto.getRandomValues(array);
+    return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function generate() {
+    const token = generateHexToken();
+
+    // update URL
+    const newUrl = window.location.pathname + "?sec=" + token;
+    window.history.replaceState(null, "", newUrl);
+
+    // show token
+    document.getElementById("tokenBox").innerText = token;
+}
+
+// run on load
+generate();
+</script>
+
+</body>
+</html>
