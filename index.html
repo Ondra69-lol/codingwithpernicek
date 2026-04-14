@@ -93,11 +93,10 @@ function generateHexToken(length = 32) {
 function generate() {
     const token = generateHexToken();
 
-    // update URL
-    const newUrl = window.location.pathname + "?sec=" + token;
+    // clean URL (bez /index.html apod.)
+    const newUrl = window.location.origin + "?token=" + token;
     window.history.replaceState(null, "", newUrl);
 
-    // show token
     document.getElementById("tokenBox").innerText = token;
 }
 
