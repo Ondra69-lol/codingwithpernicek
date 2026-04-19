@@ -9,12 +9,12 @@
 
   <title>Kosmický Domov</title>
 
-  <!-- 🌐 Google OAuth -->
+  <!-- Google OAuth -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <style>
 
-/* ===== FONT ===== */
+/* ===== FONT LOAD ===== */
 @font-face {
   font-family: 'GoogleSansFlexLocal';
   src: url('../fonts/GoogleSansFlex-Regular.ttf') format('truetype');
@@ -96,7 +96,7 @@ body::before {
   border-radius: 50%;
 }
 
-/* ===== TOGGLE ===== */
+/* ===== TOGGLE BUTTON ===== */
 #toggleBtn {
   position: fixed;
   top: 15px;
@@ -120,6 +120,8 @@ body::before {
   width: clamp(160px, 12vw, 240px);
   height: 100vh;
 
+  flex-shrink: 0;
+
   background: rgba(10, 10, 25, 0.6);
   backdrop-filter: blur(18px);
 
@@ -128,6 +130,33 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* ===== NAV ITEMS ===== */
+.nav-items {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1vh;
+  align-items: center;
+}
+
+.nav-item {
+  width: 80%;
+  height: 50px;
+
+  margin: 6px 0;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  color: white;
+
+  background: linear-gradient(135deg, rgba(120,80,255,0.25), rgba(0,255,255,0.08));
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 /* ===== CONTENT ===== */
@@ -172,9 +201,11 @@ body::before {
 
 <!-- NAV -->
 <div class="navbar">
-  <a href="../home">Domov</a>
-  <a href="../about">O web stránce</a>
-  <a href="../upd-log">Seznam změn</a>
+  <div class="nav-items">
+    <a class="nav-item" href="../home">Domov</a>
+    <a class="nav-item" href="../about">O web stránce</a>
+    <a class="nav-item" href="../upd-log">Seznam změn</a>
+  </div>
 </div>
 
 <!-- CONTENT -->
@@ -184,7 +215,7 @@ body::before {
   <div class="custom-frame">Frame 3</div>
 </div>
 
-<!-- 🌐 GOOGLE LOGIN CONFIG -->
+<!-- 🌐 GOOGLE LOGIN -->
 <div id="g_id_onload"
      data-client_id="193508433609-nf39vs7qpfmiroi21empg2uls3mg0dvj.apps.googleusercontent.com"
      data-callback="handleCredentialResponse">
@@ -192,20 +223,19 @@ body::before {
 
 <div class="g_id_signin" data-type="standard"></div>
 
-<!-- ⚡ SCRIPT -->
 <script>
 
-// 🌌 LOGIN HANDLER
+// 👤 LOGIN CALLBACK
 function handleCredentialResponse(response) {
 
     const data = parseJwt(response.credential);
 
-    // 👤 UI
+    // show UI
     document.getElementById("userBox").style.display = "flex";
     document.getElementById("userName").innerText = data.name;
     document.getElementById("userPic").src = data.picture;
 
-    // 🔐 ACCESS CONTROL
+    // access control
     if (data.email === "pernicekcute@gmail.com") {
         window.location.replace("../home");
     } else {
@@ -213,7 +243,7 @@ function handleCredentialResponse(response) {
     }
 }
 
-// 🧠 JWT decode
+// 🧠 decode JWT
 function parseJwt(token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
