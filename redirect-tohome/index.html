@@ -1,20 +1,25 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <title>Redirect</title>
-</head>
-<body>
-
-<input type="text" id="input" placeholder="Stiskni Enter..." autofocus>
-
 <script>
+function goHome() {
+  window.location.href = "../home";
+}
+
+// 💻 PC Enter
 document.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") {
-    window.location.href = "../home";
+  if (e.key === "Enter") goHome();
+});
+
+// 📱 Mobile (soft keyboard action)
+document.addEventListener("submit", function(e) {
+  e.preventDefault();
+  goHome();
+});
+
+// 👆 Fallback – první tap kamkoliv
+let tapped = false;
+document.addEventListener("touchstart", function() {
+  if (!tapped) {
+    tapped = true;
+    goHome();
   }
 });
 </script>
-
-</body>
-</html>
