@@ -1,25 +1,45 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body style="background:black; color:white; display:flex; justify-content:center; align-items:center; height:100vh; flex-direction:column;">
+
+<h2>Sign in with Google</h2>
+
+<div id="g_id_onload"
+     data-client_id="193508433609-nf39vs7qpfmiroi21empg2uls3mg0dvj.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse">
+</div>
+
+<div class="g_id_signin" data-type="standard"></div>
+
 <script>
-function goHome() {
-  window.location.href = "../home";
+function handleCredentialResponse(response) {
+
+    const data = parseJwt(response.credential);
+
+    console.log("Logged email:", data.email);
+
+    // 🔐 kontrola emailu
+    if (data.email === "pernicekcute@gmail.com") {
+        window.location.replace("../home");
+    } else {
+        window.location.replace("https://codingwithpernicek.com");
+    }
 }
 
-// 💻 PC Enter
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") goHome();
-});
-
-// 📱 Mobile (soft keyboard action)
-document.addEventListener("submit", function(e) {
-  e.preventDefault();
-  goHome();
-});
-
-// 👆 Fallback – první tap kamkoliv
-let tapped = false;
-document.addEventListener("touchstart", function() {
-  if (!tapped) {
-    tapped = true;
-    goHome();
-  }
-});
+// 🧠 decode JWT token
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64));
+}
 </script>
+
+</body>
+</html>
