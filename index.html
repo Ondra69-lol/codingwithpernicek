@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Serial Device Picker</title>
+</head>
+<body>
+  <h1>Serial Device Tester</h1>
+
+  <button id="connectBtn">Connect device</button>
+
+  <script>
+    const connectBtn = document.getElementById("connectBtn");
+
+    connectBtn.addEventListener("click", async () => {
+      try {
+        // otevře výběr serial zařízení
+        const port = await navigator.serial.requestPort();
+
+        // otevře spojení (baudrate můžeš změnit podle zařízení)
+        await port.open({ baudRate: 9600 });
+
+        // zkusíme přečíst info o device
+        const info = port.getInfo();
+
+        // "model" tady není vždy přímo dostupný,
+        // ale vendorId + productId se dá použít jako identifikace
+        alert(
+          "Device selected!\n" +
+          "Vendor ID: " + info.usbVendorId + "\n" +
+          "Product ID: " + info.usbProductId
+        );
+
+        await port.close();
+
+      } catch (err) {
+        console.error(err);
+        alert("No device selected or access denied 😢");
+      }
+    });
+  </script>
+</body>
+</html>
