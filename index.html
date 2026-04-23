@@ -1,43 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Serial Device Picker</title>
+<meta charset="UTF-8">
+<title>Device Serial Panel</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0f14;
+    color: #e6e6e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .panel {
+    width: 380px;
+    background: #121a24;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    border: 1px solid #1f2a3a;
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #6ee7ff;
+  }
+
+  .status {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-bottom: 15px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.03);
+  }
+
+  .device-box {
+    margin-top: 15px;
+    padding: 12px;
+    background: #0f1620;
+    border-radius: 10px;
+    border: 1px solid #243244;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .label {
+    color: #7dd3fc;
+  }
+</style>
 </head>
+
 <body>
-  <h1>Serial Device Tester</h1>
 
-  <button id="connectBtn">Connect device</button>
+<div class="panel">
+  <div class="title">🔌 Serial Device Panel</div>
+  <div class="status">Ready to connect device...</div>
 
-  <script>
-    const connectBtn = document.getElementById("connectBtn");
+  <button id="connectBtn">Connect Device</button>
 
-    connectBtn.addEventListener("click", async () => {
-      try {
-        // otevře výběr serial zařízení
-        const port = await navigator.serial.requestPort();
+  <div class="device-box" id="output">
+    <span class="label">Device info:</span><br>
+    waiting for connection...
+  </div>
+</div>
 
-        // otevře spojení (baudrate můžeš změnit podle zařízení)
-        await port.open({ baudRate: 9600 });
+<script>
+const btn = document.getElementById("connectBtn");
+const output = document.getElementById("output");
 
-        // zkusíme přečíst info o device
-        const info = port.getInfo();
+btn.addEventListener("click", async () => {
+  try {
+    const port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 9600 });
 
-        // "model" tady není vždy přímo dostupný,
-        // ale vendorId + productId se dá použít jako identifikace
-        alert(
-          "Device selected!\n" +
-          "Vendor ID: " + info.usbVendorId + "\n" +
-          "Product ID: " + info.usbProductId
-        );
+    const info = port.getInfo();
 
-        await port.close();
+    const vendor = info.usbVendorId ?? "unknown";
+    const product = info.usbProductId ?? "unknown";
 
-      } catch (err) {
-        console.error(err);
-        alert("No device selected or access denied 😢");
-      }
-    });
-  </script>
+    output.innerHTML = `
+      <span class="label">Device connected ✅</span><br><br>
+      Vendor ID: ${vendor}<br>
+      Product ID: ${product}
+    `;
+
+    alert("Device selected!");
+
+    await port.close();
+
+  } catch (e) {
+    console.log(e);
+    output.innerHTML = "❌ No device selected or access denied";
+  }
+});
+</script>
+
 </body>
 </html>
