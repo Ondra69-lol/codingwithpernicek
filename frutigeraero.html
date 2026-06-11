@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroQuack Portal OS v4.6</title>
+    <style>
+        /* --- CORE BASE & FRUTIGER ERA TYPOGRAPHY --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: 
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 170, 0.45) 0%, transparent 40%),
+                radial-gradient(circle at 15% 15%, rgba(0, 229, 255, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(118, 255, 3, 0.4) 0%, transparent 50%),
+                linear-gradient(165deg, #003b93 0%, #0072ff 35%, #00c6ff 70%, #78ffd6 100%);
+            background-attachment: fixed;
+            font-family: "Segoe UI", "Lucida Grande", Tahoma, Arial, sans-serif;
+            color: #1a2a3a;
+            padding: 30px 15px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.5s ease;
+        }
+
+        /* Ambient glowing vector ribbon sweep across back of page */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 15%; left: -20%; width: 150%; height: 400px;
+            background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.15) 40%, rgba(0,242,254,0.15) 50%, transparent 70%);
+            transform: rotate(-12deg);
+            clip-path: ellipse(80% 30% at 50% 50%);
+            pointer-events: none;
+        }
+
+        /* --- THE APPARATUS FRAME (Windows Vista / 7 True Aero Glass) --- */
+        .window-container {
+            width: 100%;
+            max-width: 1060px;
+            background: rgba(255, 255, 255, 0.25);
+            -webkit-backdrop-filter: blur(30px) saturate(220%);
+            backdrop-filter: blur(30px) saturate(220%);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 40, 80, 0.5);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                inset 1px 0 0 rgba(255, 255, 255, 0.5),
+                inset -1px 0 0 rgba(255, 255, 255, 0.5),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.4),
+                0 25px 55px rgba(0, 15, 40, 0.45);
+            overflow: hidden;
+            position: relative;
+            transition: max-width 0.25s cubic-bezier(0.1, 0.9, 0.2, 1), border-radius 0.1s ease;
+        }
+
+        /* --- INTERACTIVE STATE MODIFIERS --- */
+        
+        /* 1. MINIMIZED STATE: Hide body/footers, compress the title frame */
+        .window-container.is-minimized {
+            max-width: 450px;
+            border-radius: 8px 8px 0 0;
+            position: fixed;
+            bottom: 0;
+            left: 20px;
+            z-index: 9999;
+        }
+        .window-container.is-minimized .explorer-bar,
+        .window-container.is-minimized .content-canvas,
+        .window-container.is-minimized .system-footer {
+            display: none !important;
+        }
+
+        /* 2. MAXIMIZED STATE: Strip margins and fill screen view natively */
+        .window-container.is-maximized {
+            max-width: 100% !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            position: fixed;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            border-radius: 0 !important;
+            z-index: 99999;
+        }
+        .window-container.is-maximized .content-canvas {
+            height: calc(100vh - 43px - 41px - 40px);
+            overflow-y: auto;
+        }
+
+        /* --- TITLE BAR & OPERATING SYSTEM CONTROLS --- */
+        .title-bar {
+            background: linear-gradient(180deg, 
+                rgba(255,255,255,0.4) 0%, 
+                rgba(255,255,255,0.15) 49.9%, 
+                rgba(255,255,255,0.0) 50%, 
+                rgba(255,255,255,0.1) 100%);
+            padding: 10px 20px 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 50, 100, 0.15);
+            user-select: none;
+        }
+
+        .brand-zone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-zone h1 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            text-shadow: 0 1px 4px rgba(0, 20, 50, 0.75), 0 0 8px rgba(255,255,255,0.2);
+        }
+
+        /* --- ULTRA-FIDELITY INTERACTIVE WINDOW CONTROLS --- */
+        .window-controls {
+            display: flex;
+            gap: 3px;
+            background: rgba(0, 20, 50, 0.15);
+            padding: 0 4px 4px 4px;
+            border-radius: 0 0 5px 5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-top: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .win-btn {
+            width: 30px;
+            height: 20px;
+            border-radius: 3px;
+            border: 1px solid rgba(0, 10, 30, 0.5);
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.35),
+                0 1px 1px rgba(255,255,255,0.1);
+            cursor: pointer;
+            position: relative;
+            background: linear-gradient(to bottom, 
+                rgba(255,255,255,0.25) 0%, 
+                rgba(255,255,255,0.1) 50%, 
+                rgba(0,0,0,0.05) 50.1%, 
+                rgba(255,255,255,0.15) 100%
+            );
+            transition: all 0.1s ease-out;
+        }
+
+        /* Minimize / Maximize Glow Hovers */
+        .win-btn-min:hover, .win-btn-max:hover {
+            background: linear-gradient(to bottom, 
+                #b3e5fc 0%, 
+                #4fc3f7 49.9%, 
+                #0288d1 50%, 
+                #02a8f4 100%
+            );
+            border-color: #01579b;
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.5), 
+                0 0 8px rgba(0, 174, 255, 0.7);
+        }
+
+        /* Deep Click (Active Depression State) */
+        .win-btn:active {
+            transform: translateY(0.5px);
+            filter: brightness(0.8) saturate(120%);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.4);
+        }
+
+        /* Button Icon Geometry (High-Contrast White with Dark Dropped Shadows) */
+        .win-btn-min::before {
+            content: ""; position: absolute; bottom: 5px; left: 10px; width: 10px; height: 2px; 
+            background: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .win-btn-max::before {
+            content: ""; position: absolute; top: 4px; left: 9px; width: 10px; height: 9px; 
+            border: 2px solid #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* DYNAMIC RESTORE DOWN ICON (When Window Frame is Maximized) */
+        .window-container.is-maximized .win-btn-max::before {
+            top: 6px; left: 7px; width: 8px; height: 8px; border: 2px solid #ffffff;
+        }
+        .window-container.is-maximized .win-btn-max::after {
+            content: ""; position: absolute; top: 3px; left: 11px; width: 8px; height: 8px; 
+            border: 2px solid #ffffff; border-bottom: none; border-left: none;
+        }
+
+        /* The Legendary Glowing Candy Red Close Capsule */
+        .win-btn-close {
+            width: 48px;
+            background: linear-gradient(to bottom, 
+                rgba(255, 120, 120, 0.3) 0%, 
+                rgba(240, 70, 70, 0.2) 50%, 
+                rgba(200, 20, 20, 0.1) 50.1%, 
+                rgba(255, 80, 80, 0.2) 100%
+            );
+        }
+        .win-btn-close::before, .win-btn-close::after {
+            content: ""; position: absolute; top: 8px; left: 22px; width: 2px; height: 11px; 
+            background: rgba(255,255,255,0.95); transform: rotate(45deg); box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
+        }
+        .win-btn-close::after { transform: rotate(-45deg); }
+        
+        /* Vibrant Crimson Gel Explosion on Hover */
+        .win-btn-close:hover {
+            background: linear-gradient(to bottom, 
+                #ff8a80 0%, 
+                #ff5252 49.9%, 
+                #ff1744 50%, 
+                #b71c1c 100%
+            );
+            border-color: #5c0000;
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.5), 
+                0 0 14px rgba(255, 23, 68, 0.85);
+        }
+        .win-btn-close:hover::before { transform: rotate(135deg); }
+        .win-btn-close:hover::after { transform: rotate(45deg); }
+
+        .win-btn-close:active {
+            background: linear-gradient(to bottom, #880e4f 0%, #d50000 100%);
+        }
+
+        /* --- SUB NAVIGATION APPLICATIONS EXPLORER BAR --- */
+        .explorer-bar {
+            background: rgba(240, 248, 255, 0.85);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #b8cfdf;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e3d59;
+            padding: 6px 16px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            transition: all 0.1s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: linear-gradient(to bottom, #ffffff 0%, #e2f1fa 50%, #d2e6f4 50.1%, #e6f3fc 100%);
+            border-color: #a3c4db;
+            box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0,0,0,0.05);
+            color: #0055aa;
+        }
+
+        /* 2000s Internet Explorer Glossy Search Bar */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-box {
+            padding: 5px 10px;
+            font-size: 12px;
+            border: 1px solid #98b6ca;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+            width: 180px;
+            background: linear-gradient(to bottom, #f7fbfd 0%, #ffffff 100%);
+        }
+        .search-btn {
+            padding: 5px 12px;
+            font-size: 12px;
+            background: linear-gradient(to bottom, #b3e5fc 0%, #0288d1 100%);
+            border: 1px solid #0277bd;
+            border-left: none;
+            border-radius: 0 4px 4px 0;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* --- MAIN CANVAS LAYER --- */
+        .content-canvas {
+            background: linear-gradient(to bottom, #ffffff 0%, #f1f8fc 30%, #dbedf8 100%);
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 2.3fr 1fr;
+            gap: 25px;
+            position: relative;
+        }
+
+        /* --- SKEUOMORPHIC CSS WATER DROPLETS --- */
+        .water-drop {
+            position: absolute;
+            background: transparent;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 
+                inset -3px -3px 6px rgba(0, 40, 80, 0.15), 
+                inset 2px 2px 5px rgba(255, 255, 255, 0.8), 
+                2px 5px 10px rgba(0, 30, 60, 0.12);
+        }
+        .water-drop::before {
+            content: ""; position: absolute; top: 4px; left: 5px; width: 4px; height: 4px; background: rgba(255,255,255,0.9); border-radius: 50%;
+        }
+        .drop-1 { width: 22px; height: 20px; top: 12px; right: 30%; border-radius: 54% 46% 42% 58% / 54% 45% 55% 46%; }
+        .drop-2 { width: 14px; height: 15px; bottom: 45px; left: 20px; border-radius: 40% 60% 50% 50%; }
+
+        /* --- THE CELESTIAL GLOW BANNER --- */
+        .promo-banner {
+            grid-column: 1 / -1;
+            background: 
+                radial-gradient(circle at 85% 20%, #4cd137 0%, transparent 50%),
+                linear-gradient(115deg, #0099ff 0%, #002266 100%);
+            border: 1px solid #003388;
+            border-radius: 6px;
+            padding: 24px;
+            box-shadow: 0 4px 14px rgba(0,30,80,0.15), inset 0 1px 1px rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .promo-banner::before {
+            content: ""; position: absolute; top: -40%; left: -10%; width: 130%; height: 180%; border-radius: 38%; background: linear-gradient(rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 100%); transform: rotate(-8deg);
+        }
+
+        .promo-banner h2 { color: #ffffff; font-size: 22px; font-weight: 600; text-shadow: 0 1px 4px rgba(0,20,40,0.6); }
+        .promo-banner p { color: #b3f0ff; font-size: 13px; margin-top: 4px; text-shadow: 0 1px 2px rgba(0,20,40,0.4); }
+
+        /* --- EXTRA LIQUID ECO GEL BUTTON --- */
+        .btn-gel-action {
+            display: inline-block;
+            padding: 10px 24px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 18px;
+            background: linear-gradient(to bottom, #b2ff59 0%, #ccff90 10%, #64dd17 50%, #4be000 50.1%, #76ff03 100%);
+            border: 1px solid #2e7d32;
+            box-shadow: 0 4px 8px rgba(0,30,0,0.2), inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -2px 3px rgba(0,0,0,0.1);
+            text-shadow: 0 -1px 1px rgba(0, 40, 0, 0.6);
+            cursor: pointer;
+        }
+
+        /* --- APP WORKSPACE PANELS --- */
+        .content-panel {
+            background: #ffffff; border: 1px solid #a3c4db; border-radius: 5px; box-shadow: 0 2px 6px rgba(0,30,60,0.04); overflow: hidden;
+        }
+        .panel-heading {
+            background: linear-gradient(to bottom, #ffffff 0%, #e4f0f8 50%, #d4e6f3 50.1%, #eaf4fa 100%); padding: 10px 15px; font-size: 13px; font-weight: 700; color: #004477; border-bottom: 1px solid #a3c4db; display: flex; align-items: center; gap: 6px;
+        }
+        .panel-body { padding: 18px; font-size: 13px; line-height: 1.6; color: #2c3e50; }
+        .panel-body p { margin-bottom: 14px; }
+
+        /* --- DIGITAL ECO-METERS & GADGETS --- */
+        .sidebar-zone { display: flex; flex-direction: column; gap: 15px; }
+        .gadget-box {
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, rgba(235,245,252,0.8) 100%); border: 1px solid #b4cddc; border-radius: 5px; padding: 14px; box-shadow: inset 0 1px 0 #fff;
+        }
+        .gadget-title { font-size: 11px; font-weight: bold; color: #005b99; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+        
+        .meter-track { background: #e2ecf2; border: 1px solid #a3b9c9; border-radius: 3px; height: 14px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); }
+        .meter-fill-liquid {
+            width: 72%; height: 100%; background: linear-gradient(to bottom, #c1f8ff 0%, #00e5ff 45%, #0099ff 50%, #0055cc 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); position: relative;
+        }
+        .meter-fill-liquid::after {
+            content: ""; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); transform: translateX(-100%); animation: gloss-sweep 2.5s infinite linear;
+        }
+
+        @keyframes gloss-sweep { 100% { transform: translateX(100%); } }
+        .sync-display { font-size: 20px; font-weight: 300; color: #005293; text-align: center; padding: 12px 0; background: linear-gradient(to bottom, #ffffff 0%, #f2f9fd 100%); border: 1px dashed #a3c4db; border-radius: 4px; text-shadow: 0 1px 0 #fff; }
+
+        /* --- FOOTER COMPLIANCE BAR --- */
+        .system-footer {
+            background: linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(230,240,250,0.7) 100%); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0, 40, 80, 0.15); font-size: 11px; color: #4f6479;
+        }
+
+        /* --- HISTORICAL SHUTDOWN FALLBACK SCREEN --- */
+        .shutdown-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, #0a3161 0%, #115393 100%);
+            z-index: 999999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: "Segoe UI", sans-serif;
+            user-select: none;
+        }
+        .shutdown-orb {
+            width: 60px; height: 60px;
+            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #00bcd4 60%, #006064 100%);
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 25px rgba(0,188,212,0.6);
+            animation: pulse 2s infinite ease-in-out;
+        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.05); opacity: 1; } }
+        .shutdown-screen h2 { font-weight: 300; font-size: 28px; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+
+    <div class="window-container" id="aero-window">
+        
+        <div class="title-bar" id="title-bar-trigger">
+            <div class="brand-zone">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="url(#orbGrad)" stroke="#fff" stroke-width="1"/>
+                    <defs>
+                        <linearGradient id="orbGrad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#00f2fe"/>
+                            <stop offset="100%" stop-color="#4facfe"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>AeroQuack Exploration Platform</h1>
+            </div>
+            <div class="window-controls">
+                <button class="win-btn win-btn-min" title="Minimize" id="win-min-btn"></button>
+                <button class="win-btn win-btn-max" title="Maximize" id="win-max-btn"></button>
+                <button class="win-btn win-btn-close" title="Close" id="win-close-btn"></button>
+            </div>
+        </div>
+
+        <div class="explorer-bar">
+            <ul class="nav-links">
+                <li><a href="#" class="active">Main Portal</a></li>
+                <li><a href="#">EcoGrid</a></li>
+                <li><a href="#">SysDiagnostics</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" class="search-box" value="Search ecosystem..." onfocus="if(this.value=='Search ecosystem...')this.value='';" onblur="if(this.value=='')this.value='Search ecosystem...';">
+                <button class="search-btn">Go</button>
+            </div>
+        </div>
+
+        <main class="content-canvas">
+            <div class="water-drop drop-1"></div>
+            <div class="water-drop drop-2"></div>
+
+            <section class="promo-banner">
+                <div>
+                    <h2>Ecosystem Synchronization Matrix</h2>
+                    <p>Core systems allocation running at peak visual depth parameters.</p>
+                </div>
+                <button class="btn-gel-action">Sync Core</button>
+            </section>
+
+            <section class="content-panel">
+                <div class="panel-heading"><span>⚙️</span> localized Data Pipeline Controls</div>
+                <div class="panel-body">
+                    <p>Welcome back to the operations cockpit. Hover over the window controls up top to see full skeuomorphic light effects react to your pointer. Double-click the titlebar or tap maximize to see the icon automatically swap over into a Restore frame layout.</p>
+                </div>
+            </section>
+
+            <aside class="sidebar-zone">
+                <div class="gadget-box">
+                    <div class="gadget-title"><span>Resource Matrix</span> <span>72%</span></div>
+                    <div class="meter-track"><div class="meter-fill-liquid"></div></div>
+                </div>
+                <div class="gadget-box">
+                    <div class="gadget-title">Bandwidth Velocity</div>
+                    <div class="sync-display" id="live-pipe">1,452 kb/s</div>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="system-footer">
+            <div>&copy; 2007-2008 AeroQuack Operating Systems Inc. All lines connected.</div>
+            <div class="web20-badges">
+                <span style="background:#00e5ff; color:#002244; font-size:9px; font-weight:bold; padding:2px 5px; border-radius:3px; border:1px solid #0099cc;">DESIGN CERTIFIED</span>
+            </div>
+        </footer>
+    </div>
+
+    <div class="shutdown-screen" id="shutdown-overlay">
+        <div class="shutdown-orb"></div>
+        <h2>Logging off...</h2>
+    </div>
+
+    <script>
+        const aeroWindow = document.getElementById('aero-window');
+        const minBtn = document.getElementById('win-min-btn');
+        const maxBtn = document.getElementById('win-max-btn');
+        const closeBtn = document.getElementById('win-close-btn');
+        const titleBar = document.getElementById('title-bar-trigger');
+        const shutdownOverlay = document.getElementById('shutdown-overlay');
+
+        // MINIMIZE LOGIC
+        minBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            aeroWindow.classList.toggle('is-minimized');
+            if (aeroWindow.classList.contains('is-minimized')) {
+                aeroWindow.classList.remove('is-maximized');
+                if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+            }
+        });
+
+        // MAXIMIZE LOGIC (Now safely switches the structural icons via class injection)
+        function toggleMaximize() {
+            aeroWindow.classList.remove('is-minimized');
+            aeroWindow.classList.toggle('is-maximized');
+
+            if (aeroWindow.classList.contains('is-maximized')) {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                }
+            } else {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen().catch(()=>{});
+                }
+            }
+        }
+        maxBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMaximize(); });
+        titleBar.addEventListener('dblclick', toggleMaximize);
+
+        // CLOSE LOGIC
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            aeroWindow.style.opacity = '0';
+            aeroWindow.style.transform = 'scale(0.95) translateY(15px)';
+            aeroWindow.style.transition = 'all 0.2s ease-in';
+
+            setTimeout(() => {
+                shutdownOverlay.style.display = 'flex';
+                document.body.style.background = '#115393';
+                setTimeout(() => { window.close(); }, 800);
+            }, 1500);
+        });
+
+        setInterval(() => {
+            const currentData = 1440 + Math.floor(Math.random() * 45);
+            document.getElementById('live-pipe').textContent = `${currentData.toLocaleString()} kb/s`;
+        }, 1200);
+    </script>
+</body>
+</html>
