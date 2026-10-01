@@ -1,3 +1,4 @@
+# Run using 'irm https://codingwithpernicek.com/script.ps1 | iex'
 if (-not $args) {
     Write-Host ''
     Write-Host 'Hello from: ' -NoNewline
